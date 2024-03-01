@@ -1,2 +1,22 @@
-# Audio-Video-file-identifier-downloader-from-URL
-Identifies whether the given link contains as audio file or a video file and also downloads the content contained within the link.
+identify()
+{
+    read -p "Enter URL:" url
+    local filename=$(basename "$url")
+    wget -q --show-progress "$url"
+
+    local file_type=$(file -b --mime-type "$filename")
+
+    case "$file_type" in
+        audio/*)
+            echo "File is an audio file"
+            ;;
+        video/*)
+            echo "File is a video file"
+            ;;
+        *)
+            echo "File type is not supported"
+            ;;
+    esac
+}
+
+identify "$url"
